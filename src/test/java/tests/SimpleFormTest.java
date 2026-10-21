@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class SimpleFormTest {
 
     @BeforeAll
-    static void beforeAll() {
+    static void setupEnv() {
         Configuration.browserSize = "1920x1080";
         Configuration.browser = "chrome";
         Configuration.timeout = 10000;
