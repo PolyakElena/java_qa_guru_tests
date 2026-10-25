@@ -2,6 +2,7 @@ package tests;
 
 import com.codeborne.selenide.Configuration;
 import data.Gender;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -43,7 +44,6 @@ public class WebTests {
         $("#submit").click();
 
         $("[id=userEmail]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-        closeWebDriver();
     }
 
     @CsvFileSource(resources = "/test_data/fullCompletedWithOnlyRequiredField.csv")
@@ -60,7 +60,6 @@ public class WebTests {
         $(".table-responsive").shouldHave(text(name + " " + lastName));
         $(".table-responsive").shouldHave(text("Female"));
         $(".table-responsive").shouldHave(text(phone));
-        closeWebDriver();
     }
 
     @EnumSource(Gender.class)
@@ -77,6 +76,10 @@ public class WebTests {
         $(".table-responsive").shouldHave(text("Елена Полякова"));
         $(".table-responsive").shouldHave(text(String.valueOf(gender)));
         $(".table-responsive").shouldHave(text("9162223344"));
+    }
+
+    @AfterEach
+    void tearDown() {
         closeWebDriver();
     }
 }
