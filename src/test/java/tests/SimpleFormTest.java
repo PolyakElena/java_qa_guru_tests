@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
+import static tests.TestData.*;
 
 public class SimpleFormTest {
 
@@ -19,24 +20,24 @@ public class SimpleFormTest {
     @Test
     public void successfulSimpleFormTest() {
         open("https://qa-guru.github.io/one-page-form/text-box.html");
-        $("#userName").setValue("Elena");
-        $("#userEmail").setValue("elena@ya.ru");
-        $("textarea#currentAddress").setValue("г Москва");
-        $("textarea#permanentAddress").setValue("г Москва");
+        $("#userName").setValue(firstName);
+        $("#userEmail").setValue(userEmail);
+        $("textarea#currentAddress").setValue(currentAddress);
+        $("textarea#permanentAddress").setValue(currentAddress);
         $("#submit").click();
 
-        $("#name").shouldHave(text("Elena"));
-        $("#email").shouldHave(text("elena@ya.ru"));
-        $("p#currentAddress").shouldHave(text("г Москва"));
-        $("p#permanentAddress").shouldHave(text("г Москва"));
+        $("#name").shouldHave(text(firstName));
+        $("#email").shouldHave(text(userEmail));
+        $("p#currentAddress").shouldHave(text(currentAddress));
+        $("p#permanentAddress").shouldHave(text(currentAddress));
 
     }
 
     @Test
     public void negativeSimpleFormTest() {
         open("https://qa-guru.github.io/one-page-form/text-box.html");
-        $("#userName").setValue("Elena");
-        $("#userEmail").setValue("elena");
+        $("#userName").setValue(firstName);
+        $("#userEmail").setValue(wrongEmail);
         $("#submit").click();
 
         $("#name").shouldNot(visible);
