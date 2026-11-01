@@ -13,7 +13,7 @@ public class TestData {
     public static String month = "May";
     public static String year = "1999";
     public static String day = "20";
-    public static String data = "20 May,1999";
+    public static String data = String.format("%s %s,%s", day, month, year);
     public static String shtat = "Rajasthan";
     public static String city = "Jaipur";
     public static String cityAndShtat = "Rajasthan Jaipur";
