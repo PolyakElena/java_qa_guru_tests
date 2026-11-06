@@ -3,12 +3,12 @@ package tests;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import pages.SimpleFormPage;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
 import static tests.TestData.*;
 
 public class SimpleFormTest {
+    SimpleFormPage simpleFormPage = new SimpleFormPage();
 
     @BeforeAll
     static void setupEnv() {
@@ -19,28 +19,27 @@ public class SimpleFormTest {
 
     @Test
     public void successfulSimpleFormTest() {
-        open("https://qa-guru.github.io/one-page-form/text-box.html");
-        $("#userName").setValue(firstName);
-        $("#userEmail").setValue(userEmail);
-        $("textarea#currentAddress").setValue(currentAddress);
-        $("textarea#permanentAddress").setValue(currentAddress);
-        $("#submit").click();
+        simpleFormPage.openPage()
+                .typeUserName(firstName)
+                .typeUserEmail(userEmail)
+                .typeCurrentAddress(currentAddress)
+                .typePermanentAddress(currentAddress)
+                .submit()
 
-        $("#name").shouldHave(text(firstName));
-        $("#email").shouldHave(text(userEmail));
-        $("p#currentAddress").shouldHave(text(currentAddress));
-        $("p#permanentAddress").shouldHave(text(currentAddress));
-
+                .checkField("name", firstName)
+                .checkField("email", userEmail)
+                .checkField("currentAddress", currentAddress)
+                .checkField("permanentAddress", currentAddress);
     }
 
     @Test
     public void negativeSimpleFormTest() {
-        open("https://qa-guru.github.io/one-page-form/text-box.html");
-        $("#userName").setValue(firstName);
-        $("#userEmail").setValue(wrongEmail);
-        $("#submit").click();
+        simpleFormPage.openPage()
+                .typeUserName(firstName)
+                .typeUserEmail(wrongEmail)
+                .submit()
 
-        $("#name").shouldNot(visible);
-        $("#email").shouldNot(visible);
+                .checkNotVisibleElement("name")
+                .checkNotVisibleElement("email");
     }
 }
