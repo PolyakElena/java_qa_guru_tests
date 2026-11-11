@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import pages.SimpleFormPage;
 
-import static tests.TestData.*;
 
 public class SimpleFormTest {
     SimpleFormPage simpleFormPage = new SimpleFormPage();
@@ -19,24 +18,28 @@ public class SimpleFormTest {
 
     @Test
     public void successfulSimpleFormTest() {
+        TestData testData = new TestData();
+
         simpleFormPage.openPage()
-                .typeUserName(firstName)
-                .typeUserEmail(userEmail)
-                .typeCurrentAddress(currentAddress)
-                .typePermanentAddress(currentAddress)
+                .typeUserName(testData.firstName)
+                .typeUserEmail(testData.userEmail)
+                .typeCurrentAddress(testData.currentAddress)
+                .typePermanentAddress(testData.currentAddress)
                 .submit()
 
-                .checkField("name", firstName)
-                .checkField("email", userEmail)
-                .checkField("currentAddress", currentAddress)
-                .checkField("permanentAddress", currentAddress);
+                .checkField("name", testData.firstName)
+                .checkField("email", testData.userEmail)
+                .checkField("currentAddress", testData.currentAddress)
+                .checkField("permanentAddress", testData.currentAddress);
     }
 
     @Test
     public void negativeSimpleFormTest() {
+        TestData testData = new TestData();
+
         simpleFormPage.openPage()
-                .typeUserName(firstName)
-                .typeUserEmail(wrongEmail)
+                .typeUserName(testData.firstName)
+                .typeUserEmail(testData.wrongEmail)
                 .submit()
 
                 .checkNotVisibleElement("name")

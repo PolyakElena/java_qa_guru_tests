@@ -1,24 +1,34 @@
 package tests;
 
-public class TestData {
-    public static String firstName = "Elena";
-    public static String lastName = "Polyakova";
-    public static String userEmail = "elena@ya.ru";
-    public static String genter = "Other";
-    public static String userNumber = "1234567890";
-    public static String subjects = "Arts";
-    public static String hobby = "Sports";
-    public static String currentAddress = "г. Москва";
-    public static String picture = "1.jpg";
-    public static String month = "May";
-    public static String year = "1999";
-    public static String day = "20";
-    public static String data = String.format("%s %s,%s", day, month, year);
-    public static String shtat = "Rajasthan";
-    public static String city = "Jaipur";
-    public static String cityAndShtat = "Rajasthan Jaipur";
+import com.github.javafaker.Faker;
+import utils.RandomUtils;
 
-    public static String shortEmail = "elena@ya";
-    public static String wrongEmail = "elena";
-    public static String wrongNumber = "7999";
+import java.util.Locale;
+
+import static utils.RandomUtils.*;
+
+public class TestData {
+    public Faker faker = new Faker();
+    public Faker fakerRu = new Faker(new Locale("ru"));
+
+    public String firstName = fakerRu.name().firstName();
+    public String lastName = fakerRu.name().lastName();
+    public String userEmail = faker.internet().emailAddress();
+
+    public String userNumber = getRandomPhone();
+    public String genter = getRandomGender();
+    public String hobby = getRandomHobby();
+    public String currentAddress = fakerRu.address().fullAddress();
+    public String day = String.valueOf(getRandomInt(1, 28));
+    public String month = getRandomMonth();
+    public String year = String.valueOf(getRandomInt(1900, 2026));
+    public String data = String.format("%s %s,%s", day, month, year);
+    public String subject = getRandomSubject();
+    public String state = getRandomState();
+    public String city = generateCity(state);
+    public String picture = "1.jpg";
+
+    public String wrongEmail = fakerRu.internet().emailAddress();
+    public String shortEmail = RandomUtils.getRandomString(3);
+    public String wrongNumber = RandomUtils.getRandomString(2);
 }
