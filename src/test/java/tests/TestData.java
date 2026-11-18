@@ -15,16 +15,21 @@ public class TestData {
     public String lastName = fakerRu.name().lastName();
     public String userEmail = faker.internet().emailAddress();
 
-    public String userNumber = getRandomPhone();
-    public String genter = getRandomGender();
-    public String hobby = getRandomHobby();
+    public String userNumber = faker.phoneNumber().subscriberNumber(10);
+    public String genter = faker.options().option("Male", "Female", "Other");
+    public String hobby = faker.options().option("Sports", "Reading", "Music");
     public String currentAddress = fakerRu.address().fullAddress();
-    public String day = String.valueOf(getRandomInt(1, 28));
-    public String month = getRandomMonth();
-    public String year = String.valueOf(getRandomInt(1900, 2026));
+    public String day = String.valueOf(faker.number().numberBetween(1, 28));
+    public String month = faker.options().option(
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December");
+    public String year = String.valueOf(faker.number().numberBetween(1940, 2026));
     public String data = String.format("%s %s,%s", day, month, year);
-    public String subject = getRandomSubject();
-    public String state = getRandomState();
+    public String subject = faker.options().option(
+            "Accounting", "Arts", "Biology", "Chemistry", "Civics",
+            "Commerce", "Computer Science", "Economics", "English",
+            "Hindi", "History", "Maths", "Physics", "Social Studies");
+    public String state = faker.options().option("NCR", "Uttar Pradesh", "Haryana", "Rajasthan");
     public String city = generateCity(state);
     public String picture = "1.jpg";
 
