@@ -1,9 +1,15 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.SimpleFormPage;
+
+import static io.qameta.allure.Allure.step;
 
 
 public class SimpleFormTest {
@@ -18,33 +24,53 @@ public class SimpleFormTest {
         Configuration.remote = "https://user1:1234@selenoid.qa.guru/wd/hub";
     }
 
-    @Test
-    public void successfulSimpleFormTest() {
-        TestData testData = new TestData();
-
-        simpleFormPage.openPage()
-                .typeUserName(testData.firstName)
-                .typeUserEmail(testData.userEmail)
-                .typeCurrentAddress(testData.currentAddress)
-                .typePermanentAddress(testData.currentAddress)
-                .submit()
-
-                .checkField("name", testData.firstName)
-                .checkField("email", testData.userEmail)
-                .checkField("currentAddress", testData.currentAddress)
-                .checkField("permanentAddress", testData.currentAddress);
+    @BeforeEach
+    void addListener() {
+        SelenideLogger.addListener("AllureSelenide",
+                new AllureSelenide().screenshots(true).savePageSource(true));
     }
 
     @Test
+    @DisplayName("Successful simple form")
+    public void successfulSimpleFormTest() {
+        TestData testData = new TestData();
+
+        step("Open registration page", () ->
+                simpleFormPage.openPage());
+
+        step("Fill simple form", () -> {
+            simpleFormPage.typeUserName(testData.firstName)
+                    .typeUserEmail(testData.userEmail)
+                    .typeCurrentAddress(testData.currentAddress)
+                    .typePermanentAddress(testData.currentAddress)
+                    .submit();
+        });
+
+        step("Check simple form results data", () -> {
+            simpleFormPage.checkField("name", testData.firstName)
+                    .checkField("email", testData.userEmail)
+                    .checkField("currentAddress", testData.currentAddress)
+                    .checkField("permanentAddress", testData.currentAddress);
+        });
+    }
+
+    @Test
+    @DisplayName("Negative simple form")
     public void negativeSimpleFormTest() {
         TestData testData = new TestData();
 
-        simpleFormPage.openPage()
-                .typeUserName(testData.firstName)
-                .typeUserEmail(testData.wrongEmail)
-                .submit()
+        step("Open registration page", () ->
+                simpleFormPage.openPage());
 
-                .checkNotVisibleElement("name")
-                .checkNotVisibleElement("email");
+        step("Fill simple form", () -> {
+            simpleFormPage.typeUserName(testData.firstName)
+                    .typeUserEmail(testData.wrongEmail)
+                    .submit();
+        });
+
+        step("Check not simple form", () -> {
+            simpleFormPage.checkNotVisibleElement("name")
+                    .checkNotVisibleElement("email");
+        });
     }
 }

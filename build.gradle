@@ -26,7 +26,8 @@ dependencies {
             "com.codeborne:selenide:7.13.0",
             "org.junit.jupiter:junit-jupiter:5.14.1",
             "org.slf4j:slf4j-simple:2.0.17",
-            "com.github.javafaker:javafaker:1.0.2"
+            "com.github.javafaker:javafaker:1.0.2",
+            "io.qameta.allure:allure-selenide:2.32.0",
     )
 }
 
