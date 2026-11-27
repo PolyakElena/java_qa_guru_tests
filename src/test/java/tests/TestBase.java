@@ -27,13 +27,16 @@ public class TestBase {
 
     @BeforeAll
     static void setupEnv() {
-        Configuration.browser = "chrome";
+//        Configuration.browser = "chrome";
+        Configuration.browser = System.getProperty("browser");
         Configuration.browserSize = "1920x1080";
-        Configuration.baseUrl = "https://demoqa.com";
+        Configuration.browserVersion = System.getProperty("browserVersion");
+//        Configuration.baseUrl = "https://demoqa.com";
+        Configuration.baseUrl = System.getProperty("baseURL");
 //        Configuration.timeout = 10000; // default 4000
-        Configuration.browser = "chrome";
-        Configuration.browserVersion = "157.0";
-        Configuration.remote = "https://user1:1234@selenoid.qa.guru/wd/hub";
+//        Configuration.remote = "https://user1:1234@selenoid.qa.guru/wd/hub";
+        Configuration.remote = System.getProperty("remoteURL");
+        Configuration.headless = Boolean.parseBoolean(System.getProperty("headless"));
 
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-dev-shm-usage", "--no-sandbox");
